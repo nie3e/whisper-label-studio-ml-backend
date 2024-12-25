@@ -62,8 +62,7 @@ def _get_task_result(chunks: list[dict]) -> list[dict]:
 class Whisper(LabelStudioMLBase):
     """Custom ML Backend model
     """
-
-    MAX_LENGTH = int(os.getenv('MAX_LENGTH', 150))
+    BATCH_SIZE = int(os.getenv("BATCH_SIZE", 8))
 
     def setup(self):
         """Configure any paramaters of your model here
@@ -93,10 +92,10 @@ class Whisper(LabelStudioMLBase):
 
             result = _model(
                 sample[0].copy(),
-                batch_size=8,
+                batch_size=self.BATCH_SIZE,
                 return_timestamps=True,
                 generate_kwargs={
-                    "task": "transcribe", "language": "polish",
+                    "task": "transcribe",
                     "do_sample": False
                 }
             )

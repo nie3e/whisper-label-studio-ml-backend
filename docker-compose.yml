@@ -23,8 +23,6 @@ services:
       - LOG_LEVEL=INFO
       # specify the model name
       - MODEL_NAME=openai/whisper-small
-      # specify max generation length
-      - MAX_LENGTH=150
       # specify the number of workers and threads for the model server
       # for now this should be 1/1 because of CUDA errors
       - WORKERS=1
@@ -37,6 +35,7 @@ services:
       - LABEL_STUDIO_API_KEY=
       # huggingface whisper model name
       - MODEL_NAME=openai/whisper-small
+      - BATCH_SIZE=8
     command: ["python", "_wsgi.py"]
     ports:
       - "9090:9090"
