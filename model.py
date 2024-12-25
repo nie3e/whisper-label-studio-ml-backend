@@ -67,20 +67,20 @@ class Whisper(LabelStudioMLBase):
     def setup(self):
         """Configure any paramaters of your model here
         """
-        self.set("model_version", f'{self.__class__.__name__}-v0.0.1')
+        self.set("model_version", f"{MODEL_NAME}-v0.0.1")
 
     def predict(self, tasks: List[Dict], context: Optional[Dict] = None,
                 **kwargs) -> ModelResponse:
         from_name, to_name, value = (
             self.label_interface.get_first_tag_occurence(
-                'TextArea', 'Audio'
+                "TextArea", "Audio"
             )
         )
         audio_paths = []
         for task in tasks:
-            audio_url = task['data'].get(value) or task['data'].get(
+            audio_url = task["data"].get(value) or task["data"].get(
                 DATA_UNDEFINED_NAME)
-            audio_path = get_local_path(audio_url, task_id=task.get('id'))
+            audio_path = get_local_path(audio_url, task_id=task.get("id"))
             audio_paths.append(audio_path)
 
         predictions = []

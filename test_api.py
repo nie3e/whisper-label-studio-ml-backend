@@ -46,7 +46,8 @@ def test_predict(client):
     )
 
     expected_response = json.loads(
-        '{"results": [{"model_version": "Whisper-v0.0.1", "result": [{'
+        '{"results": [{"model_version": "openai/whisper-small-v0.0.1", '
+        '"result": [{'
         '"from_name": "labels", "id": "0", "to_name": "audio", "type": '
         '"labels", "value": {"channel": 0, "end": 4.68, "labels": ['
         '"Speech"], "start": 0.0}}, {"from_name": "transcription", '

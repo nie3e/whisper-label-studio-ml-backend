@@ -21,8 +21,6 @@ services:
       - BASIC_AUTH_PASS=
       # set the log level for the model server
       - LOG_LEVEL=INFO
-      # specify the model name
-      - MODEL_NAME=openai/whisper-small
       # specify the number of workers and threads for the model server
       # for now this should be 1/1 because of CUDA errors
       - WORKERS=1
