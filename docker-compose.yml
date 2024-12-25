@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  whisper:
+    container_name: whisper
+    image: heartexlabs/label-studio-ml-backend:huggingfacellm-master
+    build:
+      context: .
+      args:
+        TEST_ENV: ${TEST_ENV}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+    environment:
+      # specify these parameters if you want to use basic auth for the model server
+      - BASIC_AUTH_USER=
+      - BASIC_AUTH_PASS=
+      # set the log level for the model server
+      - LOG_LEVEL=INFO
+      # specify the model name
+      - MODEL_NAME=openai/whisper-small
+      # specify max generation length
+      - MAX_LENGTH=150
+      # specify the number of workers and threads for the model server
+      # for now this should be 1/1 because of CUDA errors
+      - WORKERS=1
+      - THREADS=1
+      # specify the model directory (likely you don't need to change this)
+      - MODEL_DIR=/data/models
+      # if you run label studio in docker put here your LAN ip
+      - LABEL_STUDIO_URL=
+      # API_KEY from user settings
+      - LABEL_STUDIO_API_KEY=
+      # huggingface whisper model name
+      - MODEL_NAME=openai/whisper-small
+    command: ["python", "_wsgi.py"]
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./data/server:/data"
+      - "./data/.cache:/root/.cache"
